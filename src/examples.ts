@@ -1,7 +1,9 @@
 import type {
     APIGatewayProxyEventV2WithLambdaAuthorizer,
-    APIGatewayProxyResultV2
 } from "aws-lambda";
+import { siemply } from ".";
+import { HttpBadRequestError, HttpNotFoundError } from "./errors";
+import { fromPath } from "./params";
 
 // TODO exclude this file from final package
 /// examples
@@ -74,12 +76,12 @@ const withAnError = siemply<WithAuthorizer>().step((payload) => {
 console.log("withAnError", withAnError(requestEvent));
 
 const notFound = siemply<WithAuthorizer>().step((payload) => {
-    throw new NotFoundError();
+    throw new HttpNotFoundError();
 });
 console.log("notFound", notFound(requestEvent));
 
 const badRequest = siemply<WithAuthorizer>().step((payload) => {
-    throw new BadRequestError();
+    throw new HttpBadRequestError();
 });
 console.log("badRequest", badRequest(requestEvent));
 
@@ -125,7 +127,7 @@ console.log("Get countries list", countriesCollectionGet(requestEvent));
 const getCountry = (id: string) => {
     const country = countriesDb.find((x) => x.id === id);
     if (!country) {
-        throw new NotFoundError();
+        throw new HttpNotFoundError();
     }
     return country;
 };
@@ -133,7 +135,7 @@ const getCountry = (id: string) => {
 // /countries/{countryId}
 const countriesSingleGet = siemply<WithAuthorizer>().step((payload) => ({
     ...payload,
-    country: getCountry(pathParam(payload.$event, "countryId"))
+    country: getCountry(fromPath(payload.$event, "countryId"))
 }));
 
 console.log(
@@ -210,7 +212,7 @@ const getProvince = (country: Pick<Country, "id">, id: string) => {
         (x) => x.countryId === country.id && x.id === id
     );
     if (!province) {
-        throw new NotFoundError();
+        throw new HttpNotFoundError();
     }
     return province;
 };
@@ -220,7 +222,7 @@ const provincesSingleGet = countriesSingleGet.step((payload) => ({
     ...payload,
     province: getProvince(
         payload.country,
-        pathParam(payload.$event, "provinceId")
+        fromPath(payload.$event, "provinceId")
     )
 }));
 console.log(

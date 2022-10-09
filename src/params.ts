@@ -1,3 +1,6 @@
+import { APIGatewayProxyEventPathParameters } from "aws-lambda";
+import { HttpBadRequestError } from "./errors";
+
 /**
  * Extracting parameter from the url path. Forcing BadRequest response when the param doesn't exists.
  * 
@@ -6,16 +9,17 @@
  * @returns {string} Value of the param
  * @throws {HttpBadRequestError} When the param doesn't exists.
  */
-  export const fromPath = <EVENT_TYPE extends { pathParameters?: {[k:string] : string} }>(
+  export const fromPath = <EVENT_TYPE extends { pathParameters?: APIGatewayProxyEventPathParameters}>(
     $event: EVENT_TYPE,
     name: string
   ) => {
-    if (
-      !Object.prototype.hasOwnProperty.call($event?.pathParameters ?? {}, name)
-    ) {
+    const value = $event?.pathParameters?.[name] ?? undefined;
+
+    if(value === undefined){
       throw new HttpBadRequestError();
     }
-    return $event.pathParameters[name];
+
+    return value;
   };
 
   // TODO add flag optional, which suppress throwing an error

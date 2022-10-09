@@ -1,6 +1,6 @@
 import { HttpStatusCode, STATUS_400_BAD_REQUEST, STATUS_404_NOT_FOUND } from "./http";
 
-class HttpError extends Error {
+export class HttpError extends Error {
     constructor(
         public statusCode: HttpStatusCode,
         public publicMessage: string,
@@ -14,7 +14,7 @@ class HttpError extends Error {
 /**
  * @description HTTP code 400: Bad Request
  */
-class HttpBadRequestError extends HttpError {
+export class HttpBadRequestError extends HttpError {
     constructor(debug = false) {
         super(STATUS_400_BAD_REQUEST, "Bad Request.", debug);
     }
@@ -24,7 +24,7 @@ class HttpBadRequestError extends HttpError {
 /**
  * @description HTTP code 404: Not Found
  */
-class HttpNotFoundError extends HttpError {
+export class HttpNotFoundError extends HttpError {
     constructor(debug = false) {
         super(STATUS_404_NOT_FOUND, "Not Found.", debug);
     }
