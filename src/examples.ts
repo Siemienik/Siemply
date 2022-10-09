@@ -3,6 +3,7 @@ import type {
     APIGatewayProxyResultV2
 } from "aws-lambda";
 
+// TODO exclude this file from final package
 /// examples
 type UserContext = { userId: string };
 const requestEvent = {

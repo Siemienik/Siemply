@@ -22,4 +22,3 @@
   // TODO add mapper for value to map from string to any another 
   // TODO add default value
   // TODO add fromQuery, fromBody etc.
-  
