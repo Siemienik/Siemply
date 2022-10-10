@@ -32,4 +32,3 @@ export class HttpNotFoundError extends HttpError {
 
 
   // todo fullfill http errors
-  
