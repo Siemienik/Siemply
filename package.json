@@ -1,8 +1,7 @@
 {
   "name": "@siemply/aws-lambda",
-  "version": "1.0.0-alpha2",
+  "version": "1.0.0-alpha3",
   "description": "Siemply is super SIMPLE handlers framework for AWS Lambda. ",
-  "main": "lib/index.js",
   "repository": "https://github.com/Siemienik/Siemply",
   "author": "Siemienik Pawel <hi@siemienik.com>",
   "license": "MIT",
@@ -18,8 +17,14 @@
   },
   "files": [
     "lib/**/*",
-    "!lib/examples.*",
     "README.md",
     "LICENSE"
-  ]
+  ],
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./errors": "./lib/errors.js",
+    "./http": "./lib/http.js",
+    "./params": "./lib/params.js"
+  }
 }
