@@ -31,4 +31,4 @@ export class HttpNotFoundError extends HttpError {
 }
 
 
-  // todo fullfill http errors
+  // todo fullfill http errors. Followed by: @see https://github.com/Siemienik/Siemply/issues/6

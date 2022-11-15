@@ -29,7 +29,7 @@ const create = <CONTEXT, PAYLOAD>(settings: {
             return {
                 statusCode: $statusCode || STATUS_200_OK,
                 body: $result || result[Object.keys(result).pop() as keyof typeof result],
-                // TODO headers, cookies
+                // TODO headers, cookies. Followed by: @see https://github.com/Siemienik/Siemply/issues/3
             };
 
         } catch (err) {
@@ -37,7 +37,7 @@ const create = <CONTEXT, PAYLOAD>(settings: {
                 debug = true,
                 statusCode = STATUS_500_INTERNAL_SERVER_ERROR,
                 publicMessage: body = "Internal Server Error." // TODO consider about persist as consts the http body messages for errors. 
-            } = err as HttpError; // TODO redesign: It could be just a Error - that case is fine beacuse default values. However it could be not an Object (edge-case: err is a string), then app will crush.
+            } = err as HttpError; // TODO redesign: It is not always HttpError. It could be just an Error, for that case is not too bad beacuse then the default values will be provided. However, in JS non Object variable could be thrown (it's edge-case for instance err could be a string).
 
             if (debug) {
                 console.error(err);
