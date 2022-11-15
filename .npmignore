@@ -1,0 +1,6 @@
+/src/
+/test/
+/lib/examples.*
+/node_modules/
+/tsconfig.json
+/yarn-error.log
